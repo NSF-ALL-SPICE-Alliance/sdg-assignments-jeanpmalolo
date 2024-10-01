@@ -128,11 +128,11 @@ We can also double-click the boxes in the legend to only view the regions we're 
 #### <span style="color: red;">Challenge 1</span>
 
 Here is the code for a scatter plot you made in the last lesson:
-
-```{r, warning = FALSE}
+```{r} 
 ggplot(data = sdr_data, aes(x= goal_3_score, y = goal_4_score, color = regions_used_for_the_sdr)) +
   geom_point()
 ```
+
 
 *Edit the code chunk above* that generates the plot to:
 
@@ -146,6 +146,18 @@ ggplot(data = sdr_data, aes(x= goal_3_score, y = goal_4_score, color = regions_u
 
   - hint: you will have to assign a name to the plot
 
+```{r}
+sdg_histogram <- ggplot(sdr_data, aes(x = goal_4_score, fill=regions_used_for_the_sdr)) +
+  geom_histogram() +
+  theme_minimal() +
+  scale_fill_viridis_d() +
+  labs(title = "Distributions of SDG 4 Scores",
+       x = "SDG 4 Score",
+       y = "SDG 3 Score",
+       fill = "Region")
+
+ggplotly(sdg_histogram)
+```
 
 
 ### Creating interactive maps with `leaflet`
@@ -255,14 +267,14 @@ Awesome! We're ready to make a map
 ```{r}
 mytext <- paste(
     "Country: ", sdr_data_world_joined$country,"<br/>", 
-    "Goal 7 Score: ", round(sdr_data_world_joined$goal_7_score, 2), 
+    "Goal 1 Score: ", round(sdr_data_world_joined$goal_1_score, 2), 
     sep="") %>%
   lapply(htmltools::HTML)
 
 leaflet(sdr_data_world_joined) %>% 
   addTiles()  %>% 
   setView( lat=10, lng=0 , zoom=2) %>%
-  addPolygons(stroke = FALSE, fillOpacity = 0.5, smoothFactor = 0.5, color = ~colorQuantile("YlOrRd", goal_7_score)(goal_7_score), label = mytext)
+  addPolygons(stroke = FALSE, fillOpacity = 0.5, smoothFactor = 0.5, color = ~colorQuantile("Purples", goal_1_score)(goal_1_score), label = mytext)
 ```
 #### <span style="color: red;">Challenge 2</span>
 
